@@ -1,5 +1,6 @@
 #!/bin/env python3
 
+from helpers import mbrofi
 import os
 import sys
 
@@ -9,7 +10,6 @@ scripts_path = mbmain_path
 enabled_path = os.path.join(mbmain_path, "enabled")
 SCRIPTS_IGNORE = ['mbmain', 'README.md', 'config.example']
 
-from helpers import mbrofi
 
 show_mesg = True
 bind_enable = 'alt-e'
@@ -22,12 +22,12 @@ if script_id in config:
     bind_enable = lconf.get("bind_enable", fallback='alt-e')
     bind_disable = lconf.get("bind_disable", fallback='alt-d')
 
-bindings=['alt-h', bind_enable, bind_disable]
+bindings = ['alt-h', bind_enable, bind_disable]
 mesg = "Run script. Press " + bindings[0] + " for help."
 prompt = "mbrun:"
-sel=""
-filt=""
-index=0
+sel = ""
+filt = ""
+index = 0
 
 launcher_args = {}
 launcher_args['prompt'] = prompt
@@ -65,8 +65,6 @@ def print_help():
     print("\t\tDisable all scripts.\n")
 
 
-
-
 def get_scripts(path):
     slist = []
     displaylist = []
@@ -81,7 +79,7 @@ def get_scripts(path):
 
 def enable_script(scriptname):
     valid_scripts, d = get_scripts(scripts_path)
-    if (scriptname not in valid_scripts ):
+    if (scriptname not in valid_scripts):
         print("'" + scriptname + "' not a valid script. Valid scripts:")
         for s in valid_scripts:
             print(s)
@@ -101,7 +99,7 @@ def enable_script(scriptname):
 def disable_script(scriptname):
     valid_scripts, d = get_scripts(scripts_path)
     enabled_scripts, d = get_scripts(enabled_path)
-    if (scriptname not in valid_scripts ):
+    if (scriptname not in valid_scripts):
         print("'" + scriptname + "' not a valid script. Valid scripts:")
         for s in valid_scripts:
             print(s)
@@ -132,8 +130,8 @@ if __name__ == "__main__":
             if (exit == 0):
                 # Run script selected
                 if int(index) != -1:
-                    mbrofi.run_mbscript(os.path.join(enabled_path
-                                                , enabledfiles[int(index)]))
+                    mbrofi.run_mbscript(os.path.join(
+                        enabled_path, enabledfiles[int(index)]))
                 elif filt:
                     filt_list = filt.split()
                     script_name = filt_list[0]
@@ -148,8 +146,8 @@ if __name__ == "__main__":
             elif (exit == 1):
                 sys.exit(1)
             elif (exit == 10):
-                helpl = ['help menu', 'enable script[s]'
-                        , 'disable selected script']
+                helpl = ['help menu', 'enable script[s]',
+                         'disable selected script']
                 mbrofi.rofi_help(bindings, helpl)
             elif (exit == 11):
                 # list scripts to enable
@@ -166,11 +164,11 @@ if __name__ == "__main__":
                     elaunchargs['prompt'] = 'mbrun enable:'
                     elaunchargs['bindings'] = [bindings[1]]
                     elaunchargs['format'] = 's'
-                    additional = ['-multi-select', 
-                                  '-kb-row-tab', '',
+                    additional = ['-multi-select',
+                                  '-kb-row-select', '',
                                   '-kb-accept-alt', 'Tab',
                                   '-matching', 'fuzzy']
-                    ans,exit = mbrofi.rofi(newlist, elaunchargs, additional)
+                    ans, exit = mbrofi.rofi(newlist, elaunchargs, additional)
                     if exit == 0:
                         ans = ans.strip()
                         for scriptname in ans.split("\n"):
