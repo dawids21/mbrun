@@ -16,9 +16,9 @@ rofi_lines = None
 script_ident = 'define'
 if script_ident in mbconfig:
     dictionary_file = mbconfig[script_ident].get("dictionary_file",
-                                        fallback='dictd_www.dict.org_gcide')
+                                                 fallback='dictd_www.dict.org_gcide')
     thesaurus_file = mbconfig[script_ident].get("thesaurus_file",
-                                        fallback='Moby Thesaurus II')
+                                                fallback='Moby Thesaurus II')
     BIND_TOGGLE = mbconfig[script_ident].get("bind_toggle", fallback="alt-t")
     BIND_OPENWEB = mbconfig[script_ident].get("bind_openweb", fallback="alt-o")
     rofi_lines = mbconfig[script_ident].get("rofi_lines", fallback=None)
@@ -28,7 +28,7 @@ if rofi_lines == "None":
     rofi_lines = None
 
 # launcher variables
-prompt = "define:"
+prompt = "define: "
 filt = ""
 
 # run correct launcher with prompt and help message
@@ -64,17 +64,17 @@ def main(launcher_args, query=None, thesaurus=False, rofi_lines=None):
     """Main function."""
     while True:
         if thesaurus:
-            launcher_args['prompt'] = "thesaurus:"
+            launcher_args['prompt'] = "thesaurus: "
             launcher_args['mesg'] = "Press '" + BIND_TOGGLE
             launcher_args['mesg'] += "' to show definition,"
             launcher_args['mesg'] += " '" + BIND_OPENWEB + "' to open in web."
         else:
-            launcher_args['prompt'] = "define"
+            launcher_args['prompt'] = "define: "
             launcher_args['mesg'] = "Press '" + BIND_TOGGLE
             launcher_args['mesg'] += "' to show thesaurus,"
             launcher_args['mesg'] += " '" + BIND_OPENWEB + "' to open in web."
         if query is None:
-                answer, exit_code = mbrofi.rofi([], launcher_args)
+            answer, exit_code = mbrofi.rofi([], launcher_args)
         else:
             if rofi_lines is None:
                 theme_args = ["-theme-str", "#window {width: 38em;}"]
@@ -100,9 +100,9 @@ def main(launcher_args, query=None, thesaurus=False, rofi_lines=None):
             if exit_code == 11:
                 if query:
                     if thesaurus:
-                        squery="http://www.thesaurus.com/browse/" + query
+                        squery = "http://www.thesaurus.com/browse/" + query
                     else:
-                        squery="http://www.dictionary.com/browse/" + query
+                        squery = "http://www.dictionary.com/browse/" + query
                     Popen([BROWSER, squery]).communicate()
                     break
             else:
@@ -119,9 +119,9 @@ def main(launcher_args, query=None, thesaurus=False, rofi_lines=None):
             if not filt:
                 continue
             if thesaurus:
-                squery="http://www.thesaurus.com/browse/" + filt
+                squery = "http://www.thesaurus.com/browse/" + filt
             else:
-                squery="http://www.dictionary.com/browse/" + filt
+                squery = "http://www.dictionary.com/browse/" + filt
             Popen([BROWSER, squery]).communicate()
             break
         else:

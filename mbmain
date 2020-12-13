@@ -24,7 +24,7 @@ if script_id in config:
 
 bindings = ['alt-h', bind_enable, bind_disable]
 mesg = "Run script. Press " + bindings[0] + " for help."
-prompt = "mbrun:"
+prompt = "mbrun: "
 sel = ""
 filt = ""
 index = 0
